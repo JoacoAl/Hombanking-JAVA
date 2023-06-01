@@ -1,0 +1,20 @@
+th {
+  width: 5rem;
+}
+
+table,
+thead,
+tbody,
+tr,
+td,
+th {
+  border: 1px solid black !important;
+}
+
+input {
+  border: 1px solid black;
+}
+
+.btn-delete {
+  width: 3rem !important;
+}
