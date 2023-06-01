@@ -7,14 +7,7 @@ thead,
 tbody,
 tr,
 td,
-th {
+th,
+input{
   border: 1px solid black !important;
-}
-
-input {
-  border: 1px solid black;
-}
-
-.btn-delete {
-  width: 3rem !important;
 }
