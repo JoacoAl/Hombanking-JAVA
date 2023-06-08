@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../STYLE/account.css" />
+    <link rel="stylesheet" href="../STYLE/accounts.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -16,14 +16,25 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     />
     <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon" />
-    <title>Ramos Bank</title>
+    <title>Ramos Bank| My accounts</title>
   </head>
   <body>
     <header>
-      <div class="d-flex flex-row w-100 justify-content-center">
+      <div class="d-flex flex-row justify-content-center col-sm-12">
         <nav
-          class="navbar navbar-expand-lg gap-5 justify-content-around d-flex div-nav"
+          class="navbar navbar-expand-lg gap-5 justify-content-around d-flex div-nav mt-0"
         >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
           <div>
             <img src="../IMG/logo.png" alt="logo" class="img-logo" />
           </div>
@@ -36,7 +47,7 @@
                 <a
                   class="nav-link ancors-nav"
                   aria-current="page"
-                  href="./index.html"
+                  href="../web/index.html"
                   >Home</a
                 >
               </li>
@@ -75,29 +86,27 @@
         <div
           class="d-flex flex-column align-items-center col-12 div-info-account"
         >
-          <div class="text-center">
-            <div v-for="account of accounts">
-              <div class="card d-flex flex-row info-account">
-                <div class="item item--4">
-                  <span class="quantity text-span">
-                    {{clients.firstName}} {{clients.lastName}}
-                  </span>
-                  <span class="text text--4"> Full Name</span>
-                </div>
-                <div class="item item--1">
-                  <span class="quantity text-span"> {{account.number}} </span>
-                  <span class="text text--1"> Account number</span>
-                </div>
-                <div class="item item--2">
-                  <span class="quantity text-span"> ${{account.balance}}</span>
-                  <span class="text text--2"> Account balance </span>
-                </div>
-                <div class="item item--3">
-                  <span class="quantity text-span">
-                    {{account.creationDate}}
-                  </span>
-                  <span class="text text--3"> Creation Date </span>
-                </div>
+          <div class="text-center div-accounts">
+            <div class="card d-flex info-account" v-for="account of accounts">
+              <div class="item item--4">
+                <span class="quantity text-span">
+                  {{clients.firstName}} {{clients.lastName}}
+                </span>
+                <span class="text text--4"> Full Name</span>
+              </div>
+              <div class="item item--1">
+                <span class="quantity text-span"> {{account.number}} </span>
+                <span class="text text--1"> Account number</span>
+              </div>
+              <div class="item item--2">
+                <span class="quantity text-span"> ${{account.balance}}</span>
+                <span class="text text--2"> Account balance </span>
+              </div>
+              <div class="item item--3">
+                <span class="quantity text-span">
+                  {{account.creationDate}}
+                </span>
+                <span class="text text--3"> Creation Date </span>
               </div>
             </div>
           </div>
