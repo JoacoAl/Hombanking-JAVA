@@ -14,20 +14,8 @@ header {
 .div-nav {
   width: 1240px;
 }
-nav {
-  position: fixed !important;
-  background-color: white !important;
-  z-index: 1 !important;
-}
 .img-logo {
   width: 50px !important;
-}
-
-th {
-  background-color: rgb(65, 110, 233) !important;
-  color: white !important;
-  border: 1px solid white !important;
-  border-radius: 0.5rem !important;
 }
 
 .bi,
@@ -45,7 +33,6 @@ header {
 }
 
 .div-h2 {
-  background-color: rgb(65, 110, 233);
   margin-top: 1rem;
   padding: 0.5rem;
   border-radius: 1rem 0rem 1rem 0rem;
@@ -68,17 +55,6 @@ header {
   flex-grow: 0 !important;
 }
 
-.img-carousel {
-  width: 500px !important;
-}
-.img-carousel-w {
-  height: 375px !important;
-}
-
-.section-carousel {
-  min-height: 50vh !important;
-}
-
 .div-h1 {
   width: 500px !important;
   max-height: 300px !important;
@@ -91,14 +67,10 @@ header {
   color: rgb(65, 110, 233);
 }
 
-.img-store {
-  width: 150px !important;
-}
-
 /* footer */
 footer {
   min-height: 4vh !important;
-  margin-top: 5rem !important;
+  margin-top: 6rem !important;
 }
 .cardFooter {
   width: fit-content;
@@ -251,7 +223,7 @@ footer {
   font-size: 1.7rem !important;
 }
 
-.section-account {
+.section-transaction {
   background-color: rgb(65, 110, 233) !important;
   border-radius: 3rem !important;
 }
@@ -261,52 +233,76 @@ footer {
   border-style: none !important;
 }
 
-.div-info-account {
-  margin-bottom: 5rem;
+.div-info-transaction {
+  margin-bottom: 2rem;
 }
 
 .section-info {
   margin-top: 5rem !important;
 }
-
-.container-community {
-  background-color: rgb(65, 110, 233) !important;
-  border-radius: 3rem;
-  height: 55vh;
+.section-transaction {
+  min-height: 25rem !important;
 }
-
-.img-emojis {
-  width: 50rem !important;
-}
-
-.div-qr {
-  background-color: white;
-  border-radius: 10px;
-  width: 150px !important;
-  height: 135px !important;
-}
-.img-qr {
-  width: 120px;
-}
-
 .footer-text {
   font-size: 12px;
   color: black;
 }
+.btn-back {
+  background-color: rgb(31, 64, 156);
+  border: 0px;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+.btn-back > a {
+  text-decoration: none;
+}
+.div-btn-back {
+  margin-bottom: 2rem;
+}
 
-.emoji-dolar {
-  font-size: 2.5rem;
-}
-.text-pays {
-  color: rgb(65, 110, 233);
-}
-.h2-safepays {
-  font-size: 3rem;
-}
-.div-payservices {
-  width: 500px;
+table,
+thead,
+tbody,
+tr,
+th,
+td {
+  background-color: rgb(31, 64, 156) !important;
+  color: white !important;
+  border-radius: 10px !important;
+  border-style: none !important;
 }
 
-.img-marcas {
-  width: 300px;
+/* -------------------------------------------------- */
+
+/* MEDIA QUERIES  */
+
+@media only screen and (min-width: 320px) and (max-width: 576px) {
+  .section-transaction {
+    width: 100% !important;
+  }
+  main {
+    width: 100% !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .div-info-transaction {
+    width: 300px !important;
+  }
+
+  table,
+  thead,
+  tbody,
+  tr,
+  th,
+  td {
+    width: 300px !important;
+    font-size: 10px !important;
+  }
+  header,
+  nav,
+  .div-nav {
+    width: 320px !important;
+  }
 }
