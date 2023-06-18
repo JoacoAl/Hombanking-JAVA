@@ -10,7 +10,6 @@ import javax.persistence.Id;
 public class ClientLoanDTO {
 
     private Long id;
-
     private Long loanId;
     private String name;
     private double amount;

@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class ClientLoan {
@@ -23,13 +24,13 @@ public class ClientLoan {
     private Loan loan;
 
 
-    public ClientLoan(double amount, int payments, Client client, Loan loan) {
+    public ClientLoan(double amount, int payments) {
         this.amount = amount;
         this.payments = payments;
-        this.client = client;
-        this.loan = loan;
     }
-    public ClientLoan(){}
+
+    public ClientLoan() {
+    }
 
     public double getAmount() {
         return amount;
@@ -54,7 +55,8 @@ public class ClientLoan {
     public void setClient(Client client) {
         this.client = client;
     }
-@JsonIgnore
+
+    @JsonIgnore
     public Loan getLoan() {
         return loan;
     }
