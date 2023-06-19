@@ -19,8 +19,8 @@ public class CardDTO {
     private CardColor color;
     private String number;
     private int cvv;
-    private LocalDateTime thruDate;
-    private LocalDateTime fromDate;
+    private LocalDate thruDate;
+    private LocalDate fromDate;
     private Client client;
 
     public CardDTO(Card card) {
@@ -53,11 +53,11 @@ public class CardDTO {
         return cvv;
     }
 
-    public LocalDateTime getThruDate() {
+    public LocalDate getThruDate() {
         return thruDate;
     }
 
-    public LocalDateTime getFromDate() {
+    public LocalDate getFromDate() {
         return fromDate;
     }
 

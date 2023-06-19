@@ -91,9 +91,9 @@ public class HomebankingApplication {
             clientLoanRepository.save(clientloan4);
 
             /*Card*/
-            Card cardMelba = new Card(melba.getFirstName() + " " + melba.getLastName(), CardType.DEBIT, CardColor.GOLD, "4568-9564-7893-0239", 101, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
-            Card cardMelba2 = new Card(melba.getFirstName() + " " + melba.getLastName(), CardType.CREDIT, CardColor.TITANIUM, "3457-2890-1923-8490", 202, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
-            Card cardJoaco = new Card(melba.getFirstName() + " " + melba.getLastName(), CardType.CREDIT, CardColor.SILVER, "4689-3456-8902-9345", 110, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
+            Card cardMelba = new Card(melba.getFirstName() + " " + melba.getLastName(), CardType.DEBIT, CardColor.GOLD, "4568 9564 7893 0239", 101, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
+            Card cardMelba2 = new Card(melba.getFirstName() + " " + melba.getLastName(), CardType.CREDIT, CardColor.TITANIUM, "3457 2890 1923 8490", 202, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
+            Card cardJoaco = new Card(melba.getFirstName() + " " + melba.getLastName(), CardType.CREDIT, CardColor.SILVER, "4689 3456 8902 9345", 110, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
 
             melba.addCard(cardMelba);
             melba.addCard(cardMelba2);
