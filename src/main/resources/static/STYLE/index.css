@@ -27,7 +27,9 @@ th {
   border: 1px solid white !important;
   border-radius: 0.5rem !important;
 }
-
+.div-nav {
+  width: 1240px;
+}
 .bi,
 .bi-list {
   width: 10rem !important;

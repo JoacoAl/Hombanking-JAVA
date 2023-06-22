@@ -17,7 +17,9 @@ header {
 .img-logo {
   width: 50px !important;
 }
-
+.div-nav {
+  width: 1240px;
+}
 .bi,
 .bi-list {
   width: 10rem !important;
@@ -252,6 +254,7 @@ footer {
   border: 0px;
   padding: 0.5rem;
   border-radius: 10px;
+  font-weight: 700;
 }
 .btn-back > a {
   text-decoration: none;
@@ -266,10 +269,13 @@ tbody,
 tr,
 th,
 td {
-  background-color: rgb(31, 64, 156) !important;
+  background-color: rgb(18, 36, 87) !important;
   color: white !important;
   border-radius: 10px !important;
   border-style: none !important;
+}
+td {
+  font-weight: 700;
 }
 
 /* -------------------------------------------------- */

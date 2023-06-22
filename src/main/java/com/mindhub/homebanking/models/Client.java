@@ -9,9 +9,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-public class Client {
-    @Id
+    @Entity
+    public class Client {
+        @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;

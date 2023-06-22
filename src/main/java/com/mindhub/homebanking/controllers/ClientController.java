@@ -24,7 +24,7 @@ public class ClientController {
     }
 
     @RequestMapping("clients/{id}")
-    public ClientDTO getClientDTO(@PathVariable Long id){
+    public ClientDTO getClientDTO(@PathVariable Long id){ /*variable de ruta*/
         Client client = clientRepository.findById(id).orElse(null);
         ClientDTO clientDTO = new ClientDTO(client);
         return clientDTO;

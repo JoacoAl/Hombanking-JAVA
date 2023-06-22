@@ -19,28 +19,29 @@
     <title>Ramos Bank</title>
   </head>
   <body>
-    <div class="d-flex flex-row justify-content-center col-sm-12">
-      <nav
-        class="navbar navbar-expand-lg gap-5 justify-content-around d-flex div-nav mt-0"
-      >
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+    <header>
+      <div class="d-flex flex-row justify-content-center col-sm-12">
+        <nav
+          class="navbar navbar-expand-lg gap-5 justify-content-around d-flex div-nav mt-0"
         >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div>
-          <img src="../IMG/logo.png" alt="logo" class="img-logo" />
-        </div>
-        <div
-          class="collapse nav-flex navbar-collapse"
-          id="navbarSupportedContent"
-        >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div>
+            <img src="../IMG/logo.png" alt="logo" class="img-logo" />
+          </div>
+          <div
+            class="collapse nav-flex navbar-collapse"
+            id="navbarSupportedContent"
+          >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-5">
               <li class="nav-item text-center homenav">
                 <a
@@ -56,7 +57,7 @@
                 >
               </li>
               <li class="nav-item text-center">
-                <a class="nav-link ancors-nav" href="#">About Us</a>
+                <a class="nav-link ancors-nav" href="./cards.html">My cards</a>
               </li>
               <li class="nav-item text-center">
                 <a class="nav-link ancors-nav" href="#">Contact</a>
@@ -99,21 +100,27 @@
             <tbody>
               <tr v-for="transaction of transactions">
                 <th scope="row">{{transaction.id}}</th>
-                <td v-if="transaction.type == 'DEBIT'" :class="['text-danger']">
+                <td
+                  v-if="transaction.type == 'DEBIT'"
+                  :class="['text-danger'], fw-bolder"
+                >
                   {{transaction.type}}
                 </td>
                 <td
                   v-if="transaction.type == 'CREDIT'"
-                  :class="['text-success']"
+                  :class="['text-success'], fw-bolder"
                 >
                   {{transaction.type}}
                 </td>
-                <td v-if="transaction.type == 'DEBIT'" :class="['text-danger']">
+                <td
+                  v-if="transaction.type == 'DEBIT'"
+                  :class="['text-danger'],fw-bolder"
+                >
                   {{transaction.amount}}
                 </td>
                 <td
                   v-else-if="transaction.type == 'CREDIT'"
-                  :class="['text-success']"
+                  :class="['text-success'], fw-bolder"
                 >
                   {{transaction.amount}}
                 </td>
