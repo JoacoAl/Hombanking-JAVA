@@ -27,6 +27,11 @@ header {
 main {
   min-height: 32rem !important;
 }
+.h2-noloans {
+  background-color: rgb(22, 44, 104);
+  padding: 10px;
+  border-radius: 10px;
+}
 
 .section-cards {
   background-color: rgb(65, 110, 233) !important;
@@ -130,7 +135,6 @@ footer {
 
 .div-debit-cards {
   background-color: rgb(31, 64, 156) !important;
-  min-height: 25rem !important;
   border-radius: 10px;
 }
 

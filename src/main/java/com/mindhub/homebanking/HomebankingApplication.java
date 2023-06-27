@@ -2,24 +2,25 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.boot.CommandLineRunner;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @SpringBootApplication
 public class HomebankingApplication {
 
-
     public static void main(String[] args) {
         SpringApplication.run(HomebankingApplication.class, args);
     }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Bean
     public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository,
@@ -27,20 +28,25 @@ public class HomebankingApplication {
                                       ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
         return (args) -> {
             /*Client*/
-            Client melba = new Client("Melba", "Morel", "melba@mindhub.com");
-            Client joaco = new Client("Joaquin", "Altamonte", "joaquin.altamonte@gmail.com");
+            Client melba = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("melba123"));
+            Client joaco = new Client("Joaquin", "Altamonte", "joaquin.altamonte@gmail.com", passwordEncoder.encode("joaco123"));
+            Client admin = new Client("admin", "admin", "admin@admin.com", passwordEncoder.encode("admin"));
             clientRepository.save(melba);
             clientRepository.save(joaco);
+            clientRepository.save(admin);
             /*Account*/
             Account account = new Account("VIN001", LocalDate.now(), 5000);
             Account account2 = new Account("VIN002", LocalDate.now().plusDays(1), 7500);
             Account account3 = new Account("VIN003", LocalDate.now().minusDays(14), 100.000);
+            Account accountAdmin = new Account("VIN004", LocalDate.now().minusDays(14), 0);
             melba.addAccount(account);
             accountRepository.save(account);
             melba.addAccount(account2);
             accountRepository.save(account2);
             joaco.addAccount(account3);
             accountRepository.save(account3);
+            admin.addAccount(accountAdmin);
+            accountRepository.save(accountAdmin);
             /*Transaction*/
             Transaction transactionMelba = new Transaction(TransactionType.CREDIT, 2000, "mcdonalds", LocalDateTime.now());
             Transaction transactionMelba2 = new Transaction(TransactionType.DEBIT, -5000, "clothes", LocalDateTime.now().plusDays(2));
@@ -102,7 +108,6 @@ public class HomebankingApplication {
             cardRepository.save(cardMelba);
             cardRepository.save(cardMelba2);
             cardRepository.save(cardJoaco);
-
         };
     }
 }

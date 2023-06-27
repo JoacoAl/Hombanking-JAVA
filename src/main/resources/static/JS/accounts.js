@@ -3,21 +3,21 @@ const { createApp } = Vue;
 const app = createApp({
   data() {
     return {
-      clients: [],
+      client: [],
       accounts: [],
       loans: [],
-      id: [],
       amountFormated: [],
+      logged: false,
     };
   },
 
   created() {
-    const parameters = new URLSearchParams(location.search); //te devuelve los parametros de la url
-    this.id = parameters.get("id");
-    axios.get("http://localhost:8080/api/clients/1").then((response) => {
-      this.clients = response.data;
-      this.accounts = this.clients.accounts;
-      this.loans = this.clients.loans;
+    axios.get("http://localhost:8080/api/clients/current").then((response) => {
+      this.client = response.data;
+      console.log(this.clients);
+      this.logged = true;
+      this.accounts = this.client.accounts;
+      this.loans = this.client.loans;
       this.amountFormated = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
@@ -30,6 +30,14 @@ const app = createApp({
       });
       console.log(this.loans);
     });
+  },
+  methods: {
+    logOut() {
+      axios.post("/api/logout").then((response) => {
+        console.log("signed out!!!");
+        this.logged = false;
+      });
+    },
   },
 });
 
