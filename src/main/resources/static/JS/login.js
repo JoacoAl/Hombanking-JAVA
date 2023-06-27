@@ -44,7 +44,6 @@ const app = createApp({
         )
         .then((response) => {
           this.signin();
-          /* window.location.href = "/web/index.html"; */
         })
         .catch((err) => {
           this.errorModalRegister();
