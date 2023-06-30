@@ -101,12 +101,6 @@
           >
             <div class="text-center div-accounts">
               <div class="card d-flex info-account" v-for="account of accounts">
-                <div class="item item--4">
-                  <span class="quantity text-span">
-                    {{client.firstName}} {{client.lastName}}
-                  </span>
-                  <span class="text text--4"> Full Name</span>
-                </div>
                 <div class="item item--1">
                   <span class="quantity text-span"> {{account.number}} </span>
                   <span class="text text--1"> Account number</span>
@@ -133,6 +127,14 @@
             </div>
             <div v-if="accounts.length == 0" class="mt-4 text-white h2-noloans">
               <h2>¡You have no accounts!</h2>
+            </div>
+            <div id="btnCreateAccount">
+              <button
+                @click="createAccount()"
+                class="btn btn-createAccount mt-5"
+              >
+                Create Account
+              </button>
             </div>
           </div>
           <!-- LOANS -->
@@ -212,6 +214,6 @@
     ></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="../JS/accounts.js"></script>
+    <script src="../js/accounts.js"></script>
   </body>
 </html>

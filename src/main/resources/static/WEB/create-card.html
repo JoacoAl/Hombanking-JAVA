@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../STYLE/account.css" />
+    <link rel="stylesheet" href="../style/cards.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -16,10 +15,11 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     />
     <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon" />
-    <title>Ramos Bank| My account</title>
+    <title>Ramos Bank| My cards</title>
   </head>
   <body>
     <div id="app">
+      
       <header>
         <div class="d-flex flex-row justify-content-center col-sm-12">
           <nav
@@ -53,14 +53,12 @@
                   >
                 </li>
                 <li class="nav-item text-center">
-                  <a class="nav-link ancors-nav ancors-nav-selected" href="#"
+                  <a class="nav-link ancors-nav" href="./accounts.html"
                     >My accounts</a
                   >
                 </li>
                 <li class="nav-item text-center">
-                  <a class="nav-link ancors-nav" href="./cards.html"
-                    >My cards</a
-                  >
+                  <a class="nav-link ancors-nav ancors-nav-selected" href="#">My cards</a>
                 </li>
                 <li class="nav-item text-center">
                   <a class="nav-link ancors-nav" href="#">Contact</a>
@@ -68,12 +66,17 @@
               </ul>
             </div>
             <div class="d-flex gap-2">
-              <div>
+              <div v-if="logged == false">
+                <a href="login.html?login=true" class="btn btn-primary"
+                  ><i class="bi bi-person-fill"></i> Sign in</a
+                >
+              </div>
+              <div v-if="logged == true">
                 <a href="#" class="btn btn-primary"
                   ><i class="bi bi-person-fill"></i> {{client.firstName}}</a
                 >
               </div>
-              <div>
+              <div v-if="logged == true">
                 <a href="./index.html" class="btn btn-primary" @click="logOut">
                   <i class="bi bi-box-arrow-left mx-2"></i>Log out</a
                 >
@@ -82,75 +85,94 @@
           </nav>
         </div>
       </header>
-      <main
-        class="d-flex flex-column justify-content-center align-items-center mt-5"
-      >
-        <h1 class="text-dark mb-5">
-          Account Number <span class="text-h1">{{filterAccount.number}}</span>
-        </h1>
-        <section
-          class="d-flex justify-content-center flex-column align-items-center section-transaction col-12 mt-5"
-        >
-          <div class="div-h2 d-flex justify-content-center mb-4">
-            <h2 class="text-white">My transactions</h2>
-          </div>
-          <div
-            class="d-flex flex-column align-items-center col-10 div-info-transaction text-center"
-          >
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Type of transaction</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="transaction of transactions">
-                  <th scope="row">{{transaction.id}}</th>
-                  <td
-                    v-if="transaction.type == 'DEBIT'"
-                    :class="['text-danger']"
-                  >
-                    {{transaction.type}}
-                  </td>
-                  <td
-                    v-if="transaction.type == 'CREDIT'"
-                    :class="['text-success']"
-                  >
-                    {{transaction.type}}
-                  </td>
-                  <td
-                    v-if="transaction.type == 'DEBIT'"
-                    :class="['text-danger']"
-                  >
-                    {{transaction.amount}}
-                  </td>
-                  <td
-                    v-else-if="transaction.type == 'CREDIT'"
-                    :class="['text-success']"
-                  >
-                    {{transaction.amount}}
-                  </td>
-                  <td>{{transaction.description}}</td>
-                  <td>{{transaction.date}}</td>
-                  <td>{{transaction.time}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="div-btn-back">
-            <button class="item-transactions item--5 item btn-back">
-              <a href="./accounts.html" class="text-white">Back to accounts</a>
-            </button>
-          </div>
-        </section>
-      </main>
+     <main>
+     <section  class="d-flex  flex-column align-items-center section-cards col-12">
+    <div>
+      <h2 class="text-white my-4">Create Cards</h2>
     </div>
-    <footer
+      <div class="form-container text-center mb-2 d-flex justify-content-center flex-column align-items-center">
+        <img src="../img/logo.png" alt="" class="logoForm mb-2" />
+        <form class="form">
+          <div class="d-flex flex-row justify-content-center"> 
+          <div class="input-group d-flex flex-column align-items-center justify-content-center mt-3">
+            <h4>Card Type</h4>
+            <select name="cardType" class="select-card" id="cardType"  v-model="cardType">
+              <option class="select-card" value="DEBIT">DEBIT</option>
+              <option class="select-card" value="CREDIT">CREDIT</option>
+            </select>
+          </div>      
+          <div class="input-group d-flex flex-column align-items-center justify-content-center mt-3">
+            <h4>Card Color</h4>
+            <select name="cardColor" class="select-card" id="cardColor" v-model="cardColor">
+              <option class="select-card" value="GOLD" >GOLD</option>
+              <option class="select-card" value="TITANIUM">TITANIUM</option>
+              <option class="select-card" value="SILVER">SILVER</option>
+            </select>
+          </div>
+        </div>
+        <div class="card mt-5">
+          <div class="flip">
+            <div class="front GOLD">
+               <img src="../img/logo.png" alt="" class="logo logo-card"> 
+              <div class="investor"></div>
+              <div class="chip">
+                <div class="chip-line"></div>
+                <div class="chip-line"></div>
+                <div class="chip-line"></div>
+                <div class="chip-line"></div>
+                <div class="chip-main"></div>
+              </div>
+              <svg class="wave" viewBox="0 3.71 26.959 38.787" width="26.959" height="38.787" fill="white">
+                <path d="M19.709 3.719c.266.043.5.187.656.406 4.125 5.207 6.594 11.781 6.594 18.938 0 7.156-2.469 13.73-6.594 18.937-.195.336-.57.531-.957.492a.9946.9946 0 0 1-.851-.66c-.129-.367-.035-.777.246-1.051 3.855-4.867 6.156-11.023 6.156-17.718 0-6.696-2.301-12.852-6.156-17.719-.262-.317-.301-.762-.102-1.121.204-.36.602-.559 1.008-.504z"></path>
+                <path d="M13.74 7.563c.231.039.442.164.594.343 3.508 4.059 5.625 9.371 5.625 15.157 0 5.785-2.113 11.097-5.625 15.156-.363.422-1 .472-1.422.109-.422-.363-.472-1-.109-1.422 3.211-3.711 5.156-8.551 5.156-13.843 0-5.293-1.949-10.133-5.156-13.844-.27-.309-.324-.75-.141-1.114.188-.367.578-.582.985-.542h.093z"></path>
+                <path d="M7.584 11.438c.227.031.438.144.594.312 2.953 2.863 4.781 6.875 4.781 11.313 0 4.433-1.828 8.449-4.781 11.312-.398.387-1.035.383-1.422-.016-.387-.398-.383-1.035.016-1.421 2.582-2.504 4.187-5.993 4.187-9.875 0-3.883-1.605-7.372-4.187-9.875-.321-.282-.426-.739-.266-1.133.164-.395.559-.641.984-.617h.094zM1.178 15.531c.121.02.238.063.344.125 2.633 1.414 4.437 4.215 4.437 7.407 0 3.195-1.797 5.996-4.437 7.406-.492.258-1.102.07-1.36-.422-.257-.492-.07-1.102.422-1.359 2.012-1.075 3.375-3.176 3.375-5.625 0-2.446-1.371-4.551-3.375-5.625-.441-.204-.676-.692-.551-1.165.122-.468.567-.785 1.051-.742h.094z"></path>
+              </svg>
+              <div class="card-number"> 
+                <div class="section">4606 1345 XXXX XXXX</div>
+              </div>
+              <div class="end"><span class="end-text">exp. end:</span><span class="end-date">02/28</span></div>
+              <div class="card-holder">Current Client</div>
+              <div class="master">
+                <div class="circle master-red"></div>
+                <div class="circle master-yellow"></div>
+              </div>
+            </div>
+            <div  class="back GOLD">
+              <div class="strip-black"></div>
+              <div class="ccv">
+                <label>ccv</label>
+                <div>144</div>
+              </div>
+              <div class="terms">
+                <p>This card is property of Ramos Bank, Wonderland. Misuse is criminal offence. If found, please return to Ramos Bank or to the nearest bank with MasterCard logo.</p>
+                <p>Use of this card is subject to the credit card agreement.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+          <a
+            @click="createCard()"
+            class="sign mt-5"
+          >
+            Request card
+          </a>
+        </form>
+      </div>
+      <a href="./cards.html" class="btn btn-createCards my-4">Back to my cards</a>
+  <div id="errorModalCreateCards" class="modal">
+    <div class="modal-content">
+      <span class="close" @click="closeModal()">x</span>
+      <p class="mb-0 mx-2">
+  The maximum number of cards for each type and color is 1
+      </p>
+      <img src="../img/logo.png" alt="logo" class="logo-card" />
+    </div>
+  </div>
+  </section>
+          </main>
+    </div>
+
+      <footer
       class="d-flex justify-content-center flex-column align-items-center"
     >
       <img src="../img/logo.png" alt="" class="img-logo" />
@@ -183,15 +205,17 @@
           </svg>
         </a>
       </div>
-      <p class="footer-text">© Ramos Bank, 2023. All rights reserved.</p>
+        <p class="footer-text">© Ramos Bank, 2023. All rights reserved.</p>
     </footer>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="../JS/account.js"></script>
+    <script src="../js/create-card.js"></script>
   </body>
 </html>
+

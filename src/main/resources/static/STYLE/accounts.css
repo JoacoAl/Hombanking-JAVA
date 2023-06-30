@@ -359,7 +359,10 @@ footer {
   padding: 10px;
   border-radius: 10px;
 }
-
+.btn-createAccount {
+  background-color: rgb(31, 64, 156) !important;
+  color: white !important;
+}
 /* ---------------------------------------- */
 
 /* MEDIA QUERIES */

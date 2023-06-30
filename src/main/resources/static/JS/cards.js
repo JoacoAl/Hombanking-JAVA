@@ -12,23 +12,33 @@ const app = createApp({
   },
 
   created() {
-    axios.get("http://localhost:8080/api/clients/current").then((response) => {
-      this.client = response.data;
-      this.cards = response.data.cards;
-      this.cards.forEach((card) => {
-        if (card.type == "CREDIT") {
-          this.credit.push(card);
-        } else if (card.type == "DEBIT") {
-          this.debit.push(card);
-        }
-      });
-      console.log(this.credit);
-      console.log(this.debit);
-
-      this.logged = true;
-    });
+    this.loadData();
   },
   methods: {
+    loadData() {
+      axios
+        .get("http://localhost:8080/api/clients/current")
+        .then((response) => {
+          this.client = response.data;
+          this.cards = response.data.cards;
+          this.cards.forEach((card) => {
+            if (card.type == "CREDIT") {
+              this.credit.push(card);
+            } else if (card.type == "DEBIT") {
+              this.debit.push(card);
+            }
+          });
+          if (this.debit.length == 3 && this.credit.length == 3) {
+            document.getElementById("btnCreateCardDebit").style.display =
+              "none";
+          } else {
+            document.getElementById("btnCreateCardDebit").style.display =
+              "block";
+          }
+
+          this.logged = true;
+        });
+    },
     logOut() {
       axios.post("/api/logout").then((response) => {
         console.log("signed out!!!");
