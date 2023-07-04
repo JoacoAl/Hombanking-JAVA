@@ -14,14 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.swing.event.HyperlinkEvent;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.IllegalFormatCodePointException;
 import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/api")
@@ -42,27 +37,33 @@ public class CardController {
 
         do {
 
-            randomCardNumber = randomValue.nextInt(9999) + " " + randomValue.nextInt(9999) + " " + randomValue.nextInt(9999) + " " + randomValue.nextInt(9999);
+            //randomCardNumber = randomValue.nextInt(9999) + " " + randomValue.nextInt(9999) + " " + randomValue.nextInt(9999)+ " " + randomValue.nextInt(9999);
+             randomCardNumber = String.format("%04d %04d %04d %04d",
+                    randomValue.nextInt(9999), randomValue.nextInt(9999),
+                    randomValue.nextInt(9999), randomValue.nextInt(9999));
 
         } while (cardRepository.findByNumber(randomCardNumber) != null);
+        //existByNumber true or false
 
 
         int randomCvvNumber = randomValue.nextInt(999);
+        String formattedCvvNumber = String.format("%03d", randomCvvNumber);
+        int cvvInteger = Integer.parseInt(formattedCvvNumber);
 
 
         if (client.getCards().stream().filter(card -> card.getType() == cardType).count() >= 3) {
 
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("",HttpStatus.FORBIDDEN);
 
         }
+        //verifica si existe una tarjeta del mismo tipo y color creada
         if (client.getCards().stream().anyMatch(card -> card.getType() == cardType && card.getColor() == cardColor)) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        else {
-            Card card = new Card(client.getFirstName() + " " + client.getLastName(), cardType, cardColor, randomCardNumber, randomCvvNumber, LocalDate.now(), LocalDate.now().plusYears(5));
+        } else {
+            Card card = new Card(client.getFirstName() + " " + client.getLastName(), cardType, cardColor, randomCardNumber, cvvInteger, LocalDate.now(), LocalDate.now().plusYears(5));
             client.addCard(card);
             cardRepository.save(card);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>("",HttpStatus.CREATED);
         }
 
     }

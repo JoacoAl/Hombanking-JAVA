@@ -11,11 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
-
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -79,7 +77,7 @@ public class ClientController {
     }
 
     @RequestMapping("/clients/current")
-    public ResponseEntity<Object> getCurrentClient(Authentication authentication) {
+    public ResponseEntity<Object> getClientCurrent(Authentication authentication) {
         Client client = clientRepository.findByEmail(authentication.getName());
         if (client != null) {
             ClientDTO clientDTO = new ClientDTO(client);

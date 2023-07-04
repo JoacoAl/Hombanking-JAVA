@@ -35,7 +35,6 @@ const app = createApp({
             document.getElementById("btnCreateCardDebit").style.display =
               "block";
           }
-
           this.logged = true;
         });
     },

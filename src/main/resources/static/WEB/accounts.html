@@ -62,9 +62,6 @@
                     >My cards</a
                   >
                 </li>
-                <li class="nav-item text-center">
-                  <a class="nav-link ancors-nav" href="#">Contact</a>
-                </li>
               </ul>
             </div>
             <div class="d-flex gap-2">
@@ -121,6 +118,14 @@
                 >
                   <button class="text-white btn-view-transactions">
                     View transactions
+                  </button>
+                </a>
+                <a
+                  v-bind:href="'./transfers.html?number='+account.number"
+                  class="item-transactions item--5 item"
+                >
+                  <button class="text-white btn-view-transactions">
+                    Make a transfer
                   </button>
                 </a>
               </div>

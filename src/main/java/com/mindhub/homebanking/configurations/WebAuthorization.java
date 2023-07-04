@@ -5,11 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,39 +27,40 @@ public class WebAuthorization {
                 /*admin*/
                 .antMatchers("/web/manager.html","/js/manager.js", "/style/manager.css").hasAuthority("ADMIN")
                 .antMatchers("/h2-console/**","/rest/**","/api/clients", "/api/accounts" ).hasAuthority("ADMIN")
-
-
                 /*client*/
                 .antMatchers("/api/clients/current").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/clients/current/accounts").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/transactions").hasAuthority("CLIENT")
                 .antMatchers("/web/accounts.html", "/js/accounts.js","/style/accounts.css").hasAuthority("CLIENT")
                 .antMatchers("/web/account.html", "/js/account.js", "/style/account.css").hasAuthority("CLIENT")
                 .antMatchers("/web/cards.html", "/style/cards.css", "/js/cards.js").hasAuthority("CLIENT")
-                .antMatchers("/web/create-card.html", "/js/create-card.js").hasAuthority("CLIENT");
+                .antMatchers("/web/create-card.html", "/js/create-card.js").hasAuthority("CLIENT")
+                .antMatchers("/web/transfers.html", "/js/transfers.js","/style/transfers.css").hasAuthority("CLIENT");
 
 
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginPage("/api/login");
-        http.logout().logoutUrl("/api/logout").deleteCookies();
+        http.logout().logoutUrl("/api/logout").deleteCookies("JSSESIONID");
 
+        //un tipo de seguridad que desabhilitamos porque vamos a utilizar tokens
         http.csrf().disable();
 
         //deshabilitar frameOptions para que se pueda acceder a h2-console
         http.headers().frameOptions().disable();
 
-        // si el usuario no está autenticado, simplemente envíe una respuesta de falla de autenticación
+        // la autorizacion que tiene no es suficiente para, acceder a la ruta que esta tratando de ingresar
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
 
-        // si el inicio de sesión es exitoso, simplemente borre las banderas que solicitan autenticación
+        // inicio de session exitoso, borramos las flags de la autenticacion
         http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
 
-        // si falla el inicio de sesión, simplemente envíe una respuesta de falla de autenticación
+        // respuesta de error al fallo de inicio, 401
         http.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
 
-        // si el cierre de sesión es exitoso, simplemente envíe una respuesta exitosa
+        // logout exitoso, 200
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
 
         return http.build();

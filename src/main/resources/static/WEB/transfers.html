@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../STYLE/account.css" />
+    <link rel="stylesheet" href="../style/transfers.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -16,7 +15,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     />
     <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon" />
-    <title>Ramos Bank| My account</title>
+    <title>Ramos Bank| Transfers</title>
   </head>
   <body>
     <div id="app">
@@ -53,24 +52,27 @@
                   >
                 </li>
                 <li class="nav-item text-center">
-                  <a class="nav-link ancors-nav ancors-nav-selected" href="#"
+                  <a class="nav-link ancors-nav" href="./accounts.html"
                     >My accounts</a
                   >
                 </li>
                 <li class="nav-item text-center">
-                  <a class="nav-link ancors-nav" href="./cards.html"
-                    >My cards</a
-                  >
+                  <a class="nav-link ancors-nav" href="./cards.html">My cards</a>
                 </li>
               </ul>
             </div>
             <div class="d-flex gap-2">
-              <div>
+              <div v-if="logged == false">
+                <a href="login.html?login=true" class="btn btn-primary"
+                  ><i class="bi bi-person-fill"></i> Sign in</a
+                >
+              </div>
+              <div v-if="logged == true">
                 <a href="#" class="btn btn-primary"
                   ><i class="bi bi-person-fill"></i> {{client.firstName}}</a
                 >
               </div>
-              <div>
+              <div v-if="logged == true">
                 <a href="./index.html" class="btn btn-primary" @click="logOut">
                   <i class="bi bi-box-arrow-left mx-2"></i>Log out</a
                 >
@@ -79,75 +81,145 @@
           </nav>
         </div>
       </header>
-      <main
-        class="d-flex flex-column justify-content-center align-items-center mt-5"
-      >
-        <h1 class="text-dark mb-5">
-          Account Number <span class="text-h1">{{filterAccount.number}}</span>
-        </h1>
-        <section
-          class="d-flex justify-content-center flex-column align-items-center section-transaction col-12 mt-5"
-        >
-          <div class="div-h2 d-flex justify-content-center mb-4">
-            <h2 class="text-white">My transactions</h2>
-          </div>
-          <div
-            class="d-flex flex-column align-items-center col-10 div-info-transaction text-center"
-          >
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Type of transaction</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="transaction of transactions">
-                  <th scope="row">{{transaction.id}}</th>
-                  <td
-                    v-if="transaction.type == 'DEBIT'"
-                    :class="['text-danger']"
+     <main>
+        <section class="d-flex flex-column justify-content-center align-items-center">
+            <h2 class="mb-4">Make a <span class="text-h1">transaction</span>
+            </h2>
+            <div class="container-transfer d-flex justify-content-center align-items-center col-6">
+                <form class="form">
+                  <div class="d-flex flex-column justify-content-center align-items-center">  
+                    <h3 class="mb-2 text-white">Destination type</h3>
+                    <div class="input-group gap-3">
+                     <label class="text-white" for="account">Own account</label>
+                     <input type="radio" name="account" value="ownAccount">
+                     <label class="text-white" for="account">Foreign Account</label>
+                     <input type="radio" name="account" value="forgeinAccount">
+                    </div>
+                    <h4 class="mb-2 text-white">
+                      Account number</h4>
+                    <div class="input-group">
+                      <input
+                      v-model="transferObject.destinationAccount"
+                        class="input"
+                        required
+                        type="text"
+                        name="accountNumber"
+                        id="accountNumber"
+                        placeholder="VIN001"
+                      />
+                    </div>
+                    
+                    <h4 class="mb-2 text-white">Amount</h4>
+                    <div class="input-group">
+                      <input
+                      v-model="transferObject.amount"
+                      class="input"
+                      required
+                      type="text"
+                      name="Amount"
+                      id="Amount"
+                      placeholder="$0,00"
+                    />
+                    {{formatUSD}}
+                    <input
+                      v-model="amountFormated"
+                      class="input-amount text-white mt-3"
+                      disabled
+                      type="text"
+                      name="Amount"
+                      id="Amount"
+                      value="amountFormated"
+                    />
+                    </div>
+                  <h4 class="mb-2 text-white">
+                   Description</h4>
+                  <div class="input-group">
+                    <input
+                    v-model="transferObject.description"
+                      class="input"
+                      required
+                      type="text"
+                      name="description"
+                      id="description"
+                      placeholder=""
+                      
+                    />
+                  <a
+                    @click="missingData()"
+                    class="sign mt-5"
                   >
-                    {{transaction.type}}
-                  </td>
-                  <td
-                    v-if="transaction.type == 'CREDIT'"
-                    :class="['text-success']"
-                  >
-                    {{transaction.type}}
-                  </td>
-                  <td
-                    v-if="transaction.type == 'DEBIT'"
-                    :class="['text-danger']"
-                  >
-                    {{transaction.amount}}
-                  </td>
-                  <td
-                    v-else-if="transaction.type == 'CREDIT'"
-                    :class="['text-success']"
-                  >
-                    {{transaction.amount}}
-                  </td>
-                  <td>{{transaction.description}}</td>
-                  <td>{{transaction.date}}</td>
-                  <td>{{transaction.time}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="div-btn-back">
-            <button class="item-transactions item--5 item btn-back">
-              <a href="./accounts.html" class="text-white">Back to accounts</a>
-            </button>
-          </div>
+                    Make transfer
+                  </a>
+                </form>
+              </div>
+          
         </section>
-      </main>
+    </main>
+
+<!--     modal confirmation -->    
+<div id="confirmationModal" class="modal">
+      <div class="modal-content">
+        <div class="d-flex flex-row align-items-center">
+          <span class="close" @click="closeModal()">x</span>
+          <p class="mb-0 mx-2">
+  Are you sure you want to make the transaction?
+          </p>
+          <img src="../img/logo.png" alt="logo" class="logo-card" />
+        </div>
+      <div class="mt-3">
+        <button @click="makeTransfer()" class="btn-success btn mx-2">Yes, transfer.</button>
+        <button @click="closeModal()" class="btn-danger btn">No, cancel.</button>
+      </div>
+      </div>
+</div>
+    <!--     modal transfer successfully -->    
+    <div id="confirmationTransferModal" class="modal">
+      <div class="modal-content">
+        <div class="d-flex flex-row gap-5 align-items-center">
+          <span class="close" @click="closeModal()">x</span>
+          <p class="mb-0 mx-2">
+Transaction Successfully! <i class="bi bi-check-lg text-success"></i>
+          </p>
+          <img src="../img/logo.png" alt="logo" class="logo-card" />
+        </div>
+      <div class="mt-3">
+        <a href="./accounts.html" class="btn-primary btn">Back to accounts</a>
+      </div>
+      </div>
     </div>
-    <footer
+<!--     modal mising data -->    
+<div id="missingDataModal" class="modal">
+  <div class="modal-content">
+    <div class="d-flex flex-row gap-3 align-items-center">
+      <span class="close" @click="closeModal()">x</span>
+      <p class="mb-0 mx-2">
+        Missing information, check all fields
+      </p>
+      <img src="../img/logo.png" alt="logo" class="logo-card" />
+    </div>
+  <div class="mt-3">
+    <a @click="closeMissingDataModal()" class="btn-primary btn">Back to transfer</a>
+  </div>
+  </div>
+</div>
+<!-- modal error transfer -->
+<div id="modalErrorTransfer" class="modal">
+  <div class="modal-content">
+    <div class="d-flex flex-row gap-3 align-items-center">
+      <span class="close" @click="closeModal()">x</span>
+      <p class="mb-0 mx-2">
+        Something went wrong, check if the destination account is ok or if your funds are enough.
+      </p>
+      <img src="../img/logo.png" alt="logo" class="logo-card" />
+    </div>
+  <div class="mt-3">
+    <a @click="closeModalErrorTransfer()" class="btn-primary btn">Back to transfer</a>
+  </div>
+  </div>
+</div>
+</div>
+
+      <footer
       class="d-flex justify-content-center flex-column align-items-center"
     >
       <img src="../img/logo.png" alt="" class="img-logo" />
@@ -180,15 +252,16 @@
           </svg>
         </a>
       </div>
-      <p class="footer-text">© Ramos Bank, 2023. All rights reserved.</p>
+        <p class="footer-text">© Ramos Bank, 2023. All rights reserved.</p>
     </footer>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="../JS/account.js"></script>
+    <script src="../js/transfers.js"></script>
   </body>
 </html>
+

@@ -255,6 +255,7 @@ footer {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
 }
 .item-transactions > a {
   text-decoration: none !important;

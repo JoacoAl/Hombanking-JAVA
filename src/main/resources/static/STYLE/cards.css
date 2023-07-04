@@ -450,10 +450,19 @@ body {
   .form-container {
     width: 300px !important;
   }
+  .div-cards {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+@media only screen and (min-width: 1550px) {
+  .div-cards {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
-/* createCards */
-/* login */
+/* createCards */ /* login */
 .form-container {
   width: 30rem;
   border-radius: 0.75rem;
