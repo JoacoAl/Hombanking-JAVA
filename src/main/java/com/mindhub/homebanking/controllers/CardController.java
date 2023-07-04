@@ -53,17 +53,17 @@ public class CardController {
 
         if (client.getCards().stream().filter(card -> card.getType() == cardType).count() >= 3) {
 
-            return new ResponseEntity<>("",HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("You cannot have more than 3 cards per type",HttpStatus.FORBIDDEN);
 
         }
         //verifica si existe una tarjeta del mismo tipo y color creada
         if (client.getCards().stream().anyMatch(card -> card.getType() == cardType && card.getColor() == cardColor)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("You cannot create a card of the same type and color", HttpStatus.FORBIDDEN);
         } else {
             Card card = new Card(client.getFirstName() + " " + client.getLastName(), cardType, cardColor, randomCardNumber, cvvInteger, LocalDate.now(), LocalDate.now().plusYears(5));
             client.addCard(card);
             cardRepository.save(card);
-            return new ResponseEntity<>("",HttpStatus.CREATED);
+            return new ResponseEntity<>("the card was created successfully",HttpStatus.CREATED);
         }
 
     }
