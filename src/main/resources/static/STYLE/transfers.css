@@ -337,3 +337,30 @@ option {
   width: 50px !important;
   height: 50px !important;
 }
+
+/* media queries */
+
+@media only screen and (min-width: 320px) and (max-width: 576px) {
+  .container-transfer {
+    width: 320px !important;
+  }
+  form {
+    padding: 10px !important;
+  }
+}
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+  .container-transfer {
+    width: 576px !important;
+  }
+  form {
+    padding: 10px !important;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .container-transfer {
+    width: 576px !important;
+  }
+  form {
+    padding: 10px !important;
+  }
+}
