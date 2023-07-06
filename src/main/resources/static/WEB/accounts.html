@@ -112,22 +112,21 @@
                   </span>
                   <span class="text text--3"> Creation Date </span>
                 </div>
-                <a
-                  v-bind:href="'./account.html?id='+account.id"
-                  class="item-transactions item--5 item"
-                >
-                  <button class="text-white btn-view-transactions">
+                <div class="item-transactions item--5 item gap-2">
+                  <a
+                    v-bind:href="'./account.html?id='+account.id"
+                    class="ancor-accounts btn btn-view-transactions"
+                  >
                     View transactions
-                  </button>
-                </a>
-                <a
-                  v-bind:href="'./transfers.html?number='+account.number"
-                  class="item-transactions item--5 item"
-                >
-                  <button class="text-white btn-view-transactions">
-                    Make a transfer
-                  </button>
-                </a>
+                  </a>
+
+                  <a
+                    v-bind:href="'./transfers.html?number='+account.number"
+                    class="ancor-accounts btn btn-view-transactions"
+                  >
+                    Make transfer
+                  </a>
+                </div>
               </div>
             </div>
             <div v-if="accounts.length == 0" class="mt-4 text-white h2-noloans">
@@ -171,6 +170,9 @@
           <div v-else-if="loans.length == 0" class="mb-5 text-white h2-noloans">
             <h2>¡You have no active loans!</h2>
           </div>
+          <a href="./loan-application.html" class="btn btn-createAccount mb-5">
+            Apply
+          </a>
         </section>
       </main>
       <footer

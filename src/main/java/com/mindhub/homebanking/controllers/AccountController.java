@@ -3,8 +3,8 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.AccountServices;
+import com.mindhub.homebanking.services.ClientServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,26 +25,24 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/api")
 public class AccountController {
     @Autowired
-    AccountRepository accountRepository;
+    AccountServices accountServices;
     @Autowired
-    ClientRepository clientRepository;
-
+    ClientServices clientServices;
     @RequestMapping("/accounts")
-    public List<AccountDTO> getAccounts(){
-        return  accountRepository.findAll().stream().map(account -> new AccountDTO(account)).collect(toList());
+    public List<AccountDTO> getAccounts() {
+        return accountServices.getAllAccounts();
     }
 
     @RequestMapping("/accounts/{id}")
-    public AccountDTO getAccounts(@PathVariable Long id){
-        return accountRepository.findById(id).map(AccountDTO::new).orElse(null);
+    public AccountDTO getAccounts(@PathVariable Long id) {
+        return accountServices.getAccountDTO(id);
     }
-
 
 
     @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
     public ResponseEntity<Object> createAccount(Authentication authentication) {
 
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientServices.findByEmail(authentication.getName());
         Set<Account> authenticatedClientAccounts = client.getAccounts();
 
         String randomNumber;
@@ -52,16 +50,16 @@ public class AccountController {
         do {
             Random randomValue = new Random();
             randomNumber = "VIN" + randomValue.nextInt(99999999);
-        }while (accountRepository.findByNumber(randomNumber) != null);
+        } while (accountServices.findByNumber(randomNumber) != null);
 
 
-        if (authenticatedClientAccounts.size() == 3){
+        if (authenticatedClientAccounts.size() == 3) {
             return new ResponseEntity<>("You reached the limit of accounts", HttpStatus.FORBIDDEN);
-        }else{
+        } else {
             Account newAccount = new Account(randomNumber, LocalDate.now(), 0);
             client.addAccount(newAccount);
-            accountRepository.save(newAccount);
-            return new ResponseEntity<>(newAccount,HttpStatus.CREATED);
+            accountServices.save(newAccount);
+            return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
         }
     }
 }

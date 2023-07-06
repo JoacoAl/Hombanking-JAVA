@@ -215,6 +215,9 @@ footer {
 .item--4 {
   background: #f3bbe1;
 }
+.item--5 {
+  background-color: rgb(31, 64, 156) !important;
+}
 
 .quantity {
   font-size: 25px !important;
@@ -267,9 +270,6 @@ footer {
   transition: all 0.3s;
 }
 
-.item--5 {
-  background-color: rgb(31, 64, 156) !important;
-}
 /* ------------------------------------------ */
 
 .bi-info-circle {
@@ -301,8 +301,17 @@ footer {
 
 .btn-view-transactions {
   border: 0px;
-  background-color: rgb(31, 64, 156);
+  background-color: rgba(189, 189, 189, 0.219) !important;
   text-decoration: none !important;
+}
+.ancor-accounts {
+  width: 155px;
+  color: rgb(255, 255, 255) !important;
+}
+
+.ancor-accounts:hover {
+  transform: scale(0.95);
+  transition: all 0.3s;
 }
 
 /* CARDS 2 */
@@ -363,6 +372,10 @@ footer {
 .btn-createAccount {
   background-color: rgb(31, 64, 156) !important;
   color: white !important;
+}
+.btn-createAccount:hover {
+  transform: scale(0.95);
+  transition: all 0.3s;
 }
 /* ---------------------------------------- */
 

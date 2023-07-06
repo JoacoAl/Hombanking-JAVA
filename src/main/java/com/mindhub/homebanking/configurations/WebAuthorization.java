@@ -32,11 +32,13 @@ public class WebAuthorization {
                 .antMatchers(HttpMethod.POST, "/api/clients/current/accounts").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/transactions").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/loans").hasAuthority("CLIENT")
                 .antMatchers("/web/accounts.html", "/js/accounts.js","/style/accounts.css").hasAuthority("CLIENT")
                 .antMatchers("/web/account.html", "/js/account.js", "/style/account.css").hasAuthority("CLIENT")
                 .antMatchers("/web/cards.html", "/style/cards.css", "/js/cards.js").hasAuthority("CLIENT")
                 .antMatchers("/web/create-card.html", "/js/create-card.js").hasAuthority("CLIENT")
-                .antMatchers("/web/transfers.html", "/js/transfers.js","/style/transfers.css").hasAuthority("CLIENT");
+                .antMatchers("/web/transfers.html", "/js/transfers.js","/style/transfers.css").hasAuthority("CLIENT")
+                .antMatchers("/web/loan-application.html", "/js/loan-application.js","/style/loan-application.css").hasAuthority("CLIENT");
 
 
         http.formLogin()

@@ -6,6 +6,8 @@ import com.mindhub.homebanking.models.CardType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.CardServices;
+import com.mindhub.homebanking.services.ClientServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +25,14 @@ import java.util.Random;
 public class CardController {
 
     @Autowired
-    ClientRepository clientRepository;
+    ClientServices clientServices;
     @Autowired
-    CardRepository cardRepository;
+    CardServices cardServices;
 
     @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> createCard(@RequestParam CardType cardType, @RequestParam CardColor cardColor, Authentication authentication) {
 
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientServices.findByEmail(authentication.getName());
 
         Random randomValue = new Random();
         String randomCardNumber;
@@ -42,7 +44,7 @@ public class CardController {
                     randomValue.nextInt(9999), randomValue.nextInt(9999),
                     randomValue.nextInt(9999), randomValue.nextInt(9999));
 
-        } while (cardRepository.findByNumber(randomCardNumber) != null);
+        } while (cardServices.findByNumber(randomCardNumber) != null);
         //existByNumber true or false
 
 
@@ -62,7 +64,7 @@ public class CardController {
         } else {
             Card card = new Card(client.getFirstName() + " " + client.getLastName(), cardType, cardColor, randomCardNumber, cvvInteger, LocalDate.now(), LocalDate.now().plusYears(5));
             client.addCard(card);
-            cardRepository.save(card);
+            cardServices.save(card);
             return new ResponseEntity<>("the card was created successfully",HttpStatus.CREATED);
         }
 
