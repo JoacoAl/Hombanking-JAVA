@@ -28,14 +28,14 @@ public class HomebankingApplication {
                                       ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
         return (args) -> {
             /*Client*/
-            Client melba = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("melba123"));
+           /* Client melba = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("melba123"));
             Client joaco = new Client("Joaquin", "Altamonte", "joaquin.altamonte@gmail.com", passwordEncoder.encode("joaco123"));
             Client admin = new Client("admin", "admin", "admin@admin.com", passwordEncoder.encode("admin"));
             clientRepository.save(melba);
             clientRepository.save(joaco);
-            clientRepository.save(admin);
+            clientRepository.save(admin);*/
             /*Account*/
-            Account account = new Account("VIN001", LocalDate.now(), 5000);
+           /* Account account = new Account("VIN001", LocalDate.now(), 5000);
             Account account2 = new Account("VIN002", LocalDate.now().plusDays(1), 7500);
             Account account3 = new Account("VIN003", LocalDate.now().minusDays(14), 100.000);
             Account accountAdmin = new Account("VIN004", LocalDate.now().minusDays(14), 0);
@@ -46,9 +46,9 @@ public class HomebankingApplication {
             joaco.addAccount(account3);
             accountRepository.save(account3);
             admin.addAccount(accountAdmin);
-            accountRepository.save(accountAdmin);
+            accountRepository.save(accountAdmin);*/
             /*Transaction*/
-            Transaction transactionMelba = new Transaction(TransactionType.CREDIT, 2000, "mcdonalds", LocalDateTime.now());
+           /* Transaction transactionMelba = new Transaction(TransactionType.CREDIT, 2000, "mcdonalds", LocalDateTime.now());
             Transaction transactionMelba2 = new Transaction(TransactionType.DEBIT, -5000, "clothes", LocalDateTime.now().plusDays(2));
             Transaction transactionMelba3 = new Transaction(TransactionType.CREDIT, 100, "food", LocalDateTime.now().minusDays(4));
             Transaction transactionMelba4 = new Transaction(TransactionType.DEBIT, -340, "cinema", LocalDateTime.now());
@@ -65,8 +65,9 @@ public class HomebankingApplication {
             account2.addTransactions(transactionMelba4);
             transactionRepository.save(transactionMelba4);
             account3.addTransactions(transactionJoaco);
-            transactionRepository.save(transactionJoaco);
+            transactionRepository.save(transactionJoaco);*/
             /*Loan*/
+            /*
             List<Integer> dueMortgage = List.of(12, 24, 36, 48, 60);
             List<Integer> duePersonal = List.of(6, 12, 24);
             List<Integer> dueAutomotive = List.of(6, 12, 24, 36);
@@ -77,8 +78,10 @@ public class HomebankingApplication {
             loanRepository.save(loan1);
             loanRepository.save(loan2);
             loanRepository.save(loan3);
+             */
 
             /*ClientLoan*/
+            /*
             ClientLoan clientloan1 = new ClientLoan(400000, 60);
             ClientLoan clientloan2 = new ClientLoan(50000, 12);
             ClientLoan clientloan3 = new ClientLoan(100000, 24);
@@ -95,8 +98,10 @@ public class HomebankingApplication {
             clientLoanRepository.save(clientloan2);
             clientLoanRepository.save(clientloan3);
             clientLoanRepository.save(clientloan4);
+             */
 
             /*Card*/
+            /*
             Card cardMelba = new Card(melba.getFirstName() + " " + melba.getLastName(), CardType.DEBIT, CardColor.GOLD, "4568 9564 7893 0239", 101, LocalDate.now(), LocalDate.now().plusYears(5));
             Card cardMelba2 = new Card(melba.getFirstName() + " " + melba.getLastName(), CardType.CREDIT, CardColor.TITANIUM, "3457 2890 1923 8490", 202, LocalDate.now(), LocalDate.now().plusYears(5));
             Card cardJoaco = new Card(melba.getFirstName() + " " + melba.getLastName(), CardType.CREDIT, CardColor.SILVER, "4689 3456 8902 9345", 110, LocalDate.now(), LocalDate.now().plusYears(5));
@@ -108,6 +113,8 @@ public class HomebankingApplication {
             cardRepository.save(cardMelba);
             cardRepository.save(cardMelba2);
             cardRepository.save(cardJoaco);
+
+             */
         };
     }
 }

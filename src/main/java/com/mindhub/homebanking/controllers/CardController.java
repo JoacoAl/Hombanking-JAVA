@@ -43,7 +43,6 @@ public class CardController {
              randomCardNumber = String.format("%04d %04d %04d %04d",
                     randomValue.nextInt(9999), randomValue.nextInt(9999),
                     randomValue.nextInt(9999), randomValue.nextInt(9999));
-
         } while (cardServices.findByNumber(randomCardNumber) != null);
         //existByNumber true or false
 

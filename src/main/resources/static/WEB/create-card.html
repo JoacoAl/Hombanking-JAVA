@@ -90,24 +90,25 @@
       <div class="form-container text-center mb-2 d-flex justify-content-center flex-column align-items-center">
         <img src="../img/logo.png" alt="" class="logoForm mb-2" />
         <form class="form">
-          <div class="d-flex flex-row justify-content-center"> 
-          <div class="input-group d-flex flex-column align-items-center justify-content-center mt-3">
+          <div class="d-flex  justify-content-center flex-column"> 
             <h4>Card Type</h4>
-            <select name="cardType" class="select-card" id="cardType"  v-model="cardType">
-              <option selected disabled class="text-white">Type</option>
-              <option class="select-card" value="DEBIT">DEBIT</option>
-              <option class="select-card" value="CREDIT">CREDIT</option>
+          <div class="input-group gap-3 select">
+            <select name="cardType" id="cardType" v-model="cardType">
+              <option selected disabled class="text-dark">Type</option>
+              <option value="DEBIT">DEBIT</option>
+              <option value="CREDIT">CREDIT</option>
             </select>
-          </div>      
-          <div class="input-group d-flex flex-column align-items-center justify-content-center mt-3">
-            <h4>Card Color</h4>
-            <select name="cardColor" class="select-card" id="cardColor" v-model="cardColor">
-              <option selected disabled class="text-white">Color</option>
-              <option class="select-card" value="GOLD" >GOLD</option>
-              <option class="select-card" value="TITANIUM">TITANIUM</option>
-              <option class="select-card" value="SILVER">SILVER</option>
+            </div>
+          <h4>Card Color</h4>
+
+          <div class="input-group gap-3 select">
+            <select name="cardColor"id="cardColor" v-model="cardColor">
+              <option selected disabled class="text-dark">Color</option>
+              <option  value="GOLD" >GOLD</option>
+              <option  value="TITANIUM">TITANIUM</option>
+              <option  value="SILVER">SILVER</option>
             </select>
-          </div>
+            </div>
         </div>
         <div class="card mt-5">
           <div class="flip">

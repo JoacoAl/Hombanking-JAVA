@@ -10,7 +10,7 @@ const app = createApp({
       amountFormat: [],
       amountFormated: "",
       /*v-models*/
-      loanSelected: [],
+      loanSelected: "prueba",
       amount: 0,
       dues: 0,
       destinationAccountNumber: "",

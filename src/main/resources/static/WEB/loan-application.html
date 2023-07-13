@@ -91,7 +91,7 @@
                     <h3 class="mb-2 text-white">Select loan</h3>
                     <div class="input-group gap-3 select">
                     <select name="selectLoan" id="selectLoan" v-model="loanSelected">
-                      <option disabled selected>Loans</option>
+                      <option  disabled selected >Loans</option>
                       <option v-for="loan of loans":value="loan">{{loan.name}} || Max Amount: {{loan.maxAmount}}</option>
                     </select>
                     </div>
