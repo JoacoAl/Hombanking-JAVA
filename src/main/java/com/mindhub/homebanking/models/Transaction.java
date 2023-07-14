@@ -13,13 +13,10 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
-
     private TransactionType type;
     private double amount;
     private String description;
-
     private LocalDateTime date;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id ")
     private Account account;

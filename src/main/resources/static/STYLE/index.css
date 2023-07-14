@@ -95,6 +95,22 @@ header {
   width: 150px !important;
 }
 
+.container-ramosbank-info {
+  width: 650px;
+  height: 450px;
+  border-radius: 20px;
+  margin-top: 0;
+  padding: 40px;
+  background-color: rgb(65, 110, 233) !important;
+}
+.container-ramosbank-info2 {
+  width: 650px;
+  height: 450px;
+  border-radius: 20px;
+  margin-top: 0;
+  padding: 40px;
+  background-color: rgb(13, 22, 48) !important;
+}
 /* footer */
 footer {
   min-height: 4vh !important;
@@ -269,6 +285,18 @@ footer {
     display: flex !important;
     flex-direction: column !important;
   }
+  .container-ramosbank-info,
+  .container-ramosbank-info2 {
+    width: 320px !important;
+    min-height: 550px !important;
+  }
+  .container-ramosbank-info > span {
+    width: 320px !important;
+    flex-direction: column !important;
+    align-items: center;
+    display: flex;
+    margin: 0 !important;
+  }
   .img-carousel {
     width: 320px !important;
   }
@@ -318,6 +346,23 @@ footer {
   }
   .img-carousel {
     width: 576px !important;
+  }
+
+  .container-ramosbank-info,
+  .container-ramosbank-info2 {
+    width: 550px !important;
+    min-height: 450px !important;
+  }
+  .container-ramosbank-info > span {
+    width: 550px !important;
+    flex-direction: column !important;
+    align-items: center;
+    display: flex;
+    margin: 0 !important;
+  }
+  .container-div-biometric {
+    flex-direction: column !important;
+    display: flex !important;
   }
   .img-applepay {
     width: 576px !important;
