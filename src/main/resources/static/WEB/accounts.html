@@ -133,6 +133,24 @@
                 </div>
               </div>
 
+              <!-- modal error data -->
+              <!-- modal error transfer -->
+              <div id="deleteAccountError" class="modal">
+                <div class="modal-content">
+                  <div class="d-flex flex-row gap-3 align-items-center">
+                    <span class="close" @click="closeDeleteAccountError()">x</span>
+                    <p class="mb-0 mx-2">
+                      Something went wrong, you can´t delete your account with positive balance.
+                    </p>
+                    <img src="../img/logo.png" alt="logo" class="logo-card" />
+                  </div>
+                  <div class="mt-3">
+                    <a href="./accounts.html" class="btn-primary btn">Back to account
+                    </a>
+                  </div>
+                </div>
+              </div>
+
               <!-- modal typeAccount -->
               <div id="typeAcc" class="modal">
                 <div class="modal-content">

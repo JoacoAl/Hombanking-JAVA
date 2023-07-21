@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.mindhub.homebanking.dtos.TransactionDTO;
@@ -100,9 +101,9 @@ public class TransactionsController {
     }
 
 
-    @GetMapping("/downloadPDF")
-    public ResponseEntity<byte[]> getTransactionsByAccountAndDateRange(Authentication authentication, @RequestParam Long id, @RequestParam String startDate, @RequestParam String endDate) throws
-            ParseException, DocumentException, IOException {
+    @PostMapping("/downloadPDF")
+    public ResponseEntity<ByteArrayOutputStream> getTransactionsByAccountAndDateRange(Authentication authentication, @RequestParam Long id, @RequestParam String startDate, @RequestParam String endDate) throws
+            ParseException, DocumentException {
         Client client = clientServices.findByEmail(authentication.getName());
         Set<Account> setAccounts = client.getAccounts();
         Account account = setAccounts.stream().filter(acc -> acc.getId() == id).findFirst().orElse(null);
@@ -118,53 +119,54 @@ public class TransactionsController {
 
         Set<Transaction> transactions = transactionServices.getTransactionsByAccountAndDateRange(account, startDateFinal, endDateFinal);
 
-        if (transactions != null && !transactions.isEmpty()) {
-            //PDF
-            System.out.println("hay transacciones");
 
-            Document document = new Document(PageSize.A4);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            PdfWriter.getInstance(document, baos);
-            document.open();
+        //PDF
+        System.out.println("hay transacciones");
 
-            String img = "C:\\Users\\Joaquin\\Desktop\\logo.png";
-            Image image = Image.getInstance(img);
-            image.scaleAbsolute(200, 100);
-            document.add(image);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Document document = new Document(PageSize.A4);
+        PdfWriter.getInstance(document, outputStream);
 
-            BaseColor color = new BaseColor(0, 0, 0);
-            Font font = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, color);
+        document.open();
 
-            document.add(new Paragraph("Welcome" + client.getFirstName(), font));
-            document.add(new Paragraph("Accounts", font));
+        Paragraph title = new Paragraph("Account Information");
+        title.setAlignment(Element.ALIGN_CENTER);
+        document.add(title);
 
+        document.add(new Paragraph("Account holder: " + client.getFirstName() + " " + client.getLastName()));
+        document.add(new Paragraph("Account number: " + account.getNumber()));
+        document.add(new Paragraph("Account type: " + account.getTypeAccount()));
+        document.add(new Paragraph("Actual Balance: " + account.getBalance()));
 
-            for (Transaction transaction : transactions) {
-                document.add(new Paragraph("Date: " + transaction.getDate(), font));
-                document.add(new Paragraph("Description: " + transaction.getDescription(), font));
-                document.add(new Paragraph("Amount: " + transaction.getAmount(), font));
-                document.add(new Paragraph("---------------------------------------", font));
-            }
+        // Agregar tabla con las transacciones
+        PdfPTable table = new PdfPTable(3);
+        table.setWidthPercentage(100);
+        table.setSpacingBefore(10f);
+        table.setSpacingAfter(10f);
 
+        PdfPCell cell;
+        cell = new PdfPCell(new Phrase("Date"));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
 
-            document.close();
+        cell = new PdfPCell(new Phrase("Description"));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
 
-            // Obtener los bytes del PDF generado
-            byte[] pdfBytes = baos.toByteArray();
+        cell = new PdfPCell(new Phrase("Amount"));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
 
-            // Preparar la respuesta para descargar el PDF
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition", "attachment; filename=Account_Resume.pdf");
-
-            return ResponseEntity
-                    .ok()
-                    .headers(headers)
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .body(pdfBytes);
-        } else {
-            System.out.println("No se encontraron transacciones para generar el PDF.");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        for (Transaction transaction : transactions) {
+            table.addCell(transaction.getDate().toString());
+            table.addCell(transaction.getDescription());
+            table.addCell(String.valueOf(transaction.getAmount()));
         }
+
+        document.add(table);
+        document.close();
+
+        return new ResponseEntity<ByteArrayOutputStream>(HttpStatus.ACCEPTED);
     }
 
 }

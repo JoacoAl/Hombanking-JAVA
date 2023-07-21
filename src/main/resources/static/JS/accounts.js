@@ -10,7 +10,7 @@ const app = createApp({
       logged: false,
       typeAccount: null,
       transferObject: {
-        id: 6,
+        id: 3,
         startDate: "2023-07-19",
         endDate: "2023-07-24"
       }
@@ -87,34 +87,49 @@ const app = createApp({
           console.log("borrada");
           this.deletAccountOk();
         })
-        .catch((err) => console.log(err));
+        .catch(err => {
+
+          console.log(err.response.data);
+          this.closeModal();
+          this.deleteAccountError();
+
+        });
     },
 
-    /*  downloadResumePDF() {
-       const { id, startDate, endDate } = this.transferObject;
-       const url = `/api/downloadPDF?id=${id}&startDate=${startDate}&endDate=${endDate}`;
- 
-       axios.get(url)
-         .then(response => {
-           console.log("pdffdf");
- 
-           const blob = new Blob([response.data], { type: 'application/pdf' });
-           const url = window.URL.createObjectURL(blob);
-           const a = document.createElement('a');
-           a.href = url;
-           a.download = 'Account_Resume.pdf';
-           a.click();
-         })
-         .catch(err => console.log(err.response.data))
-     },
-  */
+    /* downloadResumePDF() {
+      const { id, startDate, endDate } = this.transferObject;
+      const url = `/api/downloadPDF?id=${id}&startDate=${startDate}&endDate=${endDate}`;
 
+      axios.post(url, null, {
+        headers: {
+          'Accept': 'application/pdf', // Agregamos el encabezado "Accept" para indicar que queremos un archivo PDF en la respuesta
+        },
+        responseType: 'blob', // Indicamos que esperamos una respuesta en formato Blob
+      })
+        .then(response => {
+          console.log("pdffdf");
 
-
+          const blob = new Blob([response.data], { type: 'application/pdf' });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'Account_Resume.pdf';
+          a.click();
+        })
+        .catch(err => console.log(err.response.data))
+    },
+ */
     /* COSAS */
     deletAccountOk() {
       document.getElementById("deletAccountOk").style.display = "block";
     },
+    deleteAccountError() {
+      document.getElementById("deleteAccountError").style.display = "block"
+    },
+    closeDeleteAccountError() {
+      document.getElementById("deleteAccountError").style.display = "none"
+    },
+
     confirmationModal() {
       document.getElementById("confirmationModal").style.display = "block";
     },

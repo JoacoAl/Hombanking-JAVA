@@ -90,9 +90,8 @@ public class AccountController {
         Account account = accounts.stream().filter(acc -> acc.getNumber().equals(accountNumber)).findFirst()
                 .orElse(null);
         if (account.getBalance() > 0) {
-            return new ResponseEntity<>("no podes borrar la cuenta flaco", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("The balance has to be 0", HttpStatus.FORBIDDEN);
         }
-
 
         Set<Transaction> transactions = account.getTransactions();
         transactions.forEach(tr -> tr.setActive(false));

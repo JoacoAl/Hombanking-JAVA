@@ -47,7 +47,7 @@ public class WebAuthorization implements WebMvcConfigurer {
                 .antMatchers(HttpMethod.POST, "/api/transactions").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/loans").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/loan/payments").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.GET, "/api/downloadPDF").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/downloadPDF").hasAuthority("CLIENT")
                 .antMatchers("/web/accounts.html", "/js/accounts.js","/style/accounts.css").hasAuthority("CLIENT")
                 .antMatchers("/web/account.html", "/js/account.js", "/style/account.css").hasAuthority("CLIENT")
                 .antMatchers("/web/cards.html", "/style/cards.css", "/js/cards.js").hasAuthority("CLIENT")
