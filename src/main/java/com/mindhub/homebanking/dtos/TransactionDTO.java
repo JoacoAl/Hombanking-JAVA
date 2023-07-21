@@ -7,6 +7,7 @@ import com.mindhub.homebanking.models.TransactionType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class TransactionDTO {
@@ -17,9 +18,11 @@ public class TransactionDTO {
     private double amount;
     private String description;
 
-    private LocalDateTime date;
+    private LocalDate date;
 
+    private boolean active;
 
+    private double balance;
 
     public TransactionDTO(){}
 
@@ -29,6 +32,8 @@ public class TransactionDTO {
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
         this.date = transaction.getDate();
+        this.active = transaction.isActive();
+        this.balance = transaction.getBalance();
  }
 
     public Long getId() {
@@ -47,8 +52,15 @@ public class TransactionDTO {
         return description;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
 }

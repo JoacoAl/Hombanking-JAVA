@@ -14,7 +14,15 @@ public class ClientLoan {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     private double amount;
+
+    private double remainingAmount;
     private int payments;
+
+    private int remainingPayments;
+
+    private int percentage;
+
+    private boolean active;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
@@ -24,9 +32,13 @@ public class ClientLoan {
     private Loan loan;
 
 
-    public ClientLoan(double amount, int payments) {
+    public ClientLoan(double amount, int payments, int remainingPayments, double remainingAmount, int percentage, boolean active) {
         this.amount = amount;
         this.payments = payments;
+        this.remainingPayments = remainingPayments;
+        this.remainingAmount = remainingAmount;
+        this.percentage = percentage;
+        this.active = active;
     }
 
     public ClientLoan() {
@@ -68,4 +80,37 @@ public class ClientLoan {
     public Long getId() {
         return id;
     }
+
+    public int getRemainingPayments() {
+        return remainingPayments;
+    }
+
+    public void setRemainingPayments(int remainingPayments) {
+        this.remainingPayments = remainingPayments;
+    }
+
+    public double getRemainingAmount() {
+        return remainingAmount;
+    }
+
+    public void setRemainingAmount(double remainingAmount) {
+        this.remainingAmount = remainingAmount;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }
+

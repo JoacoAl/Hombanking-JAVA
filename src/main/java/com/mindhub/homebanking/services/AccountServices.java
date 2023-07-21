@@ -10,6 +10,8 @@ public interface AccountServices {
 
     Account findByNumber (String number);
 
+    Account findById (Long id);
+
     AccountDTO getAccountDTO (Long id);
     List<AccountDTO> getAllAccounts ();
     void save (Account account);

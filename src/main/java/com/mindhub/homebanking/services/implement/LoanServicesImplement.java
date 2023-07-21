@@ -28,7 +28,9 @@ public class LoanServicesImplement implements LoanServices {
     }
 
     @Override
-    public void save(Loan loan) {
+    public Loan save(Loan loan) {
+
+        return loanRepository.save(loan);
 
     }
 }

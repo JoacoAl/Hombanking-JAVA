@@ -22,6 +22,11 @@ public class AccountServicesImplement implements AccountServices {
     }
 
     @Override
+    public Account findById(Long id) {
+        return accountRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public AccountDTO getAccountDTO(Long id) {
         return accountRepository.findById(id).map(AccountDTO::new).orElse(null);
 

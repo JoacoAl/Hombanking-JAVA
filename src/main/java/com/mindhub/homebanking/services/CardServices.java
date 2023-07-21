@@ -7,4 +7,6 @@ public interface CardServices {
 
     Card findByNumber (String number);
     void save (Card card);
+
+    void delete (Card card);
 }

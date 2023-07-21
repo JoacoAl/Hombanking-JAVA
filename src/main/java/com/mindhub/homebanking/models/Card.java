@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 public class Card {
@@ -28,6 +29,9 @@ public class Card {
 
     private LocalDate fromDate;
 
+    private boolean active;
+
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
@@ -35,7 +39,7 @@ public class Card {
     public Card() {
     }
 
-    public Card(String cardHolder, CardType type, CardColor color, String number, int cvv, LocalDate fromDate, LocalDate thruDate) {
+    public Card(String cardHolder, CardType type, CardColor color, String number, int cvv, LocalDate fromDate, LocalDate thruDate, boolean active) {
         this.cardHolder = cardHolder;
         this.type = type;
         this.color = color;
@@ -43,6 +47,7 @@ public class Card {
         this.cvv = cvv;
         this.fromDate = fromDate;
         this.thruDate = thruDate;
+        this.active = active;
 
     }
 
@@ -110,6 +115,17 @@ public class Card {
         this.color = color;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public long getId() {
+        return id;
+    }
 }
 
 

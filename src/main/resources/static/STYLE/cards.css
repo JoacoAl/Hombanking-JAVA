@@ -196,10 +196,7 @@ body {
   top: 30px;
   right: 25px;
 }
-.logo-card {
-  width: 50px !important;
-  height: 50px !important;
-}
+
 .investor {
   position: relative;
   top: 30px;
@@ -373,7 +370,7 @@ body {
 .back {
   position: absolute;
   width: 400px;
-  height: 255px;
+  height: 260px;
   border-radius: 15px;
   color: #fff;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
@@ -399,6 +396,10 @@ body {
 }
 .btn-createCards:hover {
   background-color: rgb(16, 36, 88);
+}
+.btn-deleteCards {
+  background-color: rgb(156, 52, 52) !important;
+  color: white !important;
 }
 
 /* select*/
@@ -499,6 +500,28 @@ select::-ms-expand {
   .div-cards {
     display: flex !important;
     flex-direction: column !important;
+  }
+  .div-debit-cards {
+    padding: 5px !important;
+  }
+
+  .modal-content {
+    width: 300px !important;
+  }
+}
+@media only screen and (min-width: 578px) and (max-width: 992px) {
+  .div-cards {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-content {
+    width: 400px !important;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .modal-content {
+    width: 26rem !important;
   }
 }
 @media only screen and (min-width: 1550px) {
@@ -625,6 +648,10 @@ select::-ms-expand {
 .logoForm {
   width: 50px;
 }
+.logo-card {
+  width: 50px !important;
+  height: 50px !important;
+}
 
 .input-cards {
   font-size: 18px;
@@ -647,13 +674,13 @@ select::-ms-expand {
 .modal-content {
   background-color: #fefefe;
   display: flex;
-  flex-direction: row !important;
+  flex-direction: column !important;
   text-align: center;
   align-items: center;
   margin: 20% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 26rem !important;
+  width: 26rem;
 }
 
 .close {

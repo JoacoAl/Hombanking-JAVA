@@ -294,21 +294,27 @@ td {
     align-items: center !important;
   }
   .div-info-transaction {
-    width: 300px !important;
+    width: 320px !important;
   }
 
   table,
   thead,
-  tbody,
-  tr,
-  th,
-  td {
-    width: 300px !important;
+  tbody {
+    width: 320px !important;
     font-size: 10px !important;
+  }
+  td {
+    font-weight: 400 !important;
+    width: 50px !important;
+    padding: 4px !important;
   }
   header,
   nav,
   .div-nav {
     width: 320px !important;
+  }
+
+  .modal-content {
+    width: 300px !important;
   }
 }

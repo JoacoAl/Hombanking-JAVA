@@ -12,5 +12,5 @@ public interface LoanServices {
 
     Loan findById (Long id);
 
-    void save (Loan loan);
+    Loan save (Loan loan);
 }

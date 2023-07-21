@@ -14,4 +14,11 @@ public class ClientLoanServicesImplement implements ClientLoanServices {
     public void save(ClientLoan clientLoan) {
         clientLoanRepository.save(clientLoan);
     }
+
+    @Override
+    public ClientLoan findById(long id) {
+        return clientLoanRepository.findById(id).orElse(null);
+    }
+
+
 }

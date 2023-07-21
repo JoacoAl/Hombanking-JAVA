@@ -220,8 +220,8 @@ footer {
 }
 
 .quantity {
-  font-size: 25px !important;
-  font-weight: 600 !important;
+  font-size: 25px;
+  font-weight: 600;
 }
 
 .text {
@@ -244,10 +244,6 @@ footer {
 
 .text--4 {
   color: rgba(220, 91, 183, 1) !important;
-}
-.text-span {
-  font-size: 25px;
-  font-weight: 600;
 }
 
 .item-transactions {
@@ -304,6 +300,9 @@ footer {
   background-color: rgba(189, 189, 189, 0.219) !important;
   text-decoration: none !important;
 }
+.btn-delet-account {
+  background-color: rgb(156, 52, 52) !important;
+}
 .ancor-accounts {
   width: 155px;
   color: rgb(255, 255, 255) !important;
@@ -348,10 +347,8 @@ footer {
 .info-loan {
   background: rgb(31, 64, 156) !important;
 }
-
-.quantity {
-  font-size: 25px;
-  font-weight: 600;
+.info-loan2 {
+  background: rgb(23, 38, 78) !important;
 }
 
 .text {
@@ -379,6 +376,125 @@ footer {
 }
 /* ---------------------------------------- */
 
+/* MODAL */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  display: flex;
+  flex-direction: column !important;
+  text-align: center;
+  align-items: center;
+  margin: 20% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 26rem;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logo-card {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.input-group {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.input-group label {
+  display: block;
+  color: rgba(156, 163, 175, 1);
+  margin-bottom: 4px;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  width: 100%;
+  height: 50px;
+  color: white !important;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px !important;
+  padding-left: 20px;
+  padding-right: 20px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #ffffff;
+  background-image: none;
+  flex: 1;
+  padding: 0 0.5em;
+  color: #202020;
+  cursor: pointer;
+  font-size: 1em;
+  font-family: "Open Sans", sans-serif;
+}
+select::-ms-expand {
+  display: none;
+}
+.select {
+  position: relative;
+  display: flex;
+  width: 20em;
+  height: 3em;
+  line-height: 3;
+  background: #5c6664;
+  overflow: hidden;
+  border-radius: 0.25em;
+}
+.select::after {
+  content: "\25BC";
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #a7a7a7;
+  cursor: pointer;
+  pointer-events: none;
+  transition: 0.25s all ease;
+}
+.select:hover::after {
+  color: rgb(31, 64, 156);
+}
+
 /* MEDIA QUERIES */
 
 @media only screen and (min-width: 320px) and (max-width: 576px) {
@@ -386,6 +502,11 @@ footer {
   .info-account {
     width: 320px !important;
     margin-bottom: 10rem !important;
+    min-height: 30vh !important;
+    flex-wrap: nowrap;
+  }
+  .info-account {
+    min-height: 40vh !important;
   }
 
   h4 {
@@ -403,6 +524,18 @@ footer {
   }
   .div-h2 {
     margin-bottom: 5rem !important;
+  }
+  .item-transactions {
+    margin-bottom: 5rem !important;
+  }
+
+  .quantity {
+    font-size: 14px !important;
+    font-weight: 600;
+  }
+
+  .modal-content {
+    width: 300px !important;
   }
 }
 @media only screen and (min-width: 576px) and (max-width: 768px) {
@@ -424,6 +557,20 @@ footer {
   }
   .div-h2 {
     margin-bottom: 5rem !important;
+  }
+  .modal-content {
+    width: 300px !important;
+  }
+  .quantity {
+    font-size: 17px !important;
+    font-weight: 600;
+  }
+  .item--1 {
+    margin-top: 5rem;
+  }
+
+  .div-info-loans {
+    width: 90% !important;
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
@@ -448,6 +595,16 @@ footer {
   .div-info-loans {
     width: 768px !important;
     border-radius: 3rem !important;
+  }
+
+  .quantity {
+    font-size: 20px !important;
+    font-weight: 600;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .modal-content {
+    width: 26rem !important;
   }
 }
 
