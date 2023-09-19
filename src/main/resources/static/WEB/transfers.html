@@ -63,13 +63,19 @@
               <h3 class="mb-2 text-white">Destination type</h3>
               <div class="input-group gap-3">
                 <label class="text-white" for="account">Own account</label>
-                <input type="radio" name="account" value="ownAccount">
+                <input type="radio" name="account" value="ownAccount" @click="ownAccount()">
                 <label class="text-white" for="account">Foreign Account</label>
-                <input type="radio" name="account" value="forgeinAccount">
+                <input type="radio" name="account" value="forgeinAccount" @click="forgeinAccount()">
               </div>
               <h4 class="mb-2 text-white">
                 Account number</h4>
-              <div class="input-group">
+              <div id="myAccounts" class="input-group select" v-show>
+                <select name="selectLoan" id="selectLoan" v-model="transferObject.destinationAccount">
+                  <option disabled selected>Accounts</option>
+                  <option v-for="account of ownAccounts" :value="account.number">{{account.number}}</option>
+                </select>
+              </div>
+              <div id="forgeinAccounts" class="input-group" v-show>
                 <input v-model="transferObject.destinationAccount" class="input" required type="text"
                   name="accountNumber" id="accountNumber" placeholder="VIN001" />
               </div>

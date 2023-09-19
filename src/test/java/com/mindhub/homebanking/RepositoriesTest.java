@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
-@DataJpaTest
+@SpringBootTest
 @AutoConfigureTestDatabase(replace = NONE)
 public class RepositoriesTest {
 
@@ -92,9 +94,9 @@ public class RepositoriesTest {
     //Transactions
 
     @Test
-    public void checkIfLocalDateTimeIsALocalDateTime(){
+    public void checkIfLocalDateTimeIsALocalDate(){
         List<Transaction> transactions = transactionRepository.findAll();
-        assertThat(transactions, hasItem(hasProperty("date", isA(LocalDateTime.class))));
+        assertThat(transactions, hasItem(hasProperty("date", isA(LocalDate.class))));
     }
 
 
@@ -103,7 +105,6 @@ public class RepositoriesTest {
         List<Transaction> transactions = transactionRepository.findAll();
         assertThat(transactions, hasItem(hasProperty("amount", is(not(equalTo(0.0))))));
     }
-
 
 
 }

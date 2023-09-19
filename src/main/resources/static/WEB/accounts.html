@@ -90,14 +90,14 @@
                   class="ancor-accounts btn btn-view-transactions">
                   Make transfer
                 </a>
-                <button @click="confirmationModal()" class="ancor-accounts btn btn-delet-account">
+                <button @click="confirmationModal(account.number)" class="ancor-accounts btn btn-delet-account">
                   Delete account
                 </button>
               </div>
 
               <!-- <button class="btn btn-warning" @click="downloadResumePDF()">PDF</button> -->
               <!--     modal confirmation -->
-              <div id="confirmationModal" class="modal">
+              <div :id="'confirmationModal-' + account.number" class="modal">
                 <div class="modal-content">
                   <div class="d-flex flex-row align-items-center">
                     <span class="close" @click="closeModal()">x</span>
@@ -110,7 +110,7 @@
                     <button @click="deleteAccount(account.number)" class="btn-success btn mx-2">
                       Yes, delete.
                     </button>
-                    <button @click="closeModal()" class="btn-danger btn">
+                    <button @click="closeModal(account.number)" class="btn-danger btn">
                       No, cancel.
                     </button>
                   </div>
@@ -122,7 +122,7 @@
                   <div class="d-flex flex-row gap-5 align-items-center">
                     <span class="close" @click="closeModal()">x</span>
                     <p class="mb-0 mx-2">
-                      The card was deleted successfully
+                      The account was deleted successfully
                       <i class="bi bi-check-lg text-success"></i>
                     </p>
                     <img src="../img/logo.png" alt="logo" class="logo-card" />

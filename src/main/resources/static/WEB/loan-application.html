@@ -72,7 +72,7 @@
               <div class="input-group gap-3 select">
                 <select name="selectLoan" id="selectLoan" v-model="destinationAccountNumber">
                   <option disabled selected>Accounts</option>
-                  <option v-for="account of accounts" :value="account.number">{{account.number}}</option>
+                  <option v-for="account of accountsActive" :value="account.number">{{account.number}}</option>
                 </select>
               </div>
               <h4 class="mb-2 text-white">Amount</h4>

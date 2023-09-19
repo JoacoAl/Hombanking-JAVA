@@ -5,6 +5,7 @@ const app = createApp({
     return {
       client: [],
       accounts: [],
+      accountsActive: [],
       loans: [],
       logged: false,
       amountFormat: [],
@@ -31,6 +32,8 @@ const app = createApp({
           this.client = response.data;
           this.accounts = this.client.accounts;
           this.logged = true;
+          this.accountsActive = this.accounts.filter(acc => acc.active)
+          console.log(hola);
           console.log(this.accounts);
         })
         .catch((err) => console.error());

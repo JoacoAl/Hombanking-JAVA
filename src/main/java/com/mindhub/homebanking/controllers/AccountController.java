@@ -28,12 +28,11 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/api")
 public class AccountController {
     @Autowired
-    AccountServices accountServices;
+    private AccountServices accountServices;
     @Autowired
-    ClientServices clientServices;
-
+    private ClientServices clientServices;
     @Autowired
-    TransactionServices transactionServices;
+    private TransactionServices transactionServices;
 
     @GetMapping("/accounts")
     public List<AccountDTO> getAccounts() {
@@ -61,7 +60,7 @@ public class AccountController {
             randomNumber = "VIN" + randomValue.nextInt(99999999);
         } while (accountServices.findByNumber(randomNumber) != null);
 
-        if (typeAccount == null){
+        if (typeAccount == null) {
             return new ResponseEntity<>("You have to select the type of account", HttpStatus.FORBIDDEN);
         }
 

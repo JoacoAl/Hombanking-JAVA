@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.io.*;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -52,13 +53,17 @@ public class TransactionsController {
         Client client = clientServices.findByEmail(authentication.getName());
         Set<Account> clientAccounts = client.getAccounts();
 
-        if (transferDTO.getAmount() == 0 || transferDTO.getDescription().isBlank() || transferDTO.getNumberAccount().isBlank() || transferDTO.getDestinationAccount().isBlank()) {
+        if (transferDTO.getDescription().isBlank() || transferDTO.getNumberAccount().isBlank() || transferDTO.getDestinationAccount().isBlank()) {
 
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
 
         }
 
-        if (accountServices.findByNumber(transferDTO.getNumberAccount()).equals(transferDTO.getDestinationAccount())) {
+        if (transferDTO.getAmount() <= 0){
+            return new ResponseEntity<>("The amount dasdasdsa", HttpStatus.FORBIDDEN);
+        }
+
+        if (transferDTO.getNumberAccount().equals(transferDTO.getDestinationAccount())) {
             return new ResponseEntity<>("Same accounts", HttpStatus.FORBIDDEN);
         }
 
@@ -102,8 +107,13 @@ public class TransactionsController {
 
 
     @PostMapping("/downloadPDF")
-    public ResponseEntity<ByteArrayOutputStream> getTransactionsByAccountAndDateRange(Authentication authentication, @RequestParam Long id, @RequestParam String startDate, @RequestParam String endDate) throws
-            ParseException, DocumentException {
+    public ResponseEntity<InputStreamResource> getTransactionsByAccountAndDateRange(Authentication authentication, @RequestParam Long id, @RequestParam String startDate, @RequestParam String endDate) throws
+            ParseException, DocumentException, IOException {
+
+
+        //verificar los datos
+
+
         Client client = clientServices.findByEmail(authentication.getName());
         Set<Account> setAccounts = client.getAccounts();
         Account account = setAccounts.stream().filter(acc -> acc.getId() == id).findFirst().orElse(null);
@@ -117,56 +127,132 @@ public class TransactionsController {
         LocalDate endDateFinal = dateEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
 
+
         Set<Transaction> transactions = transactionServices.getTransactionsByAccountAndDateRange(account, startDateFinal, endDateFinal);
 
 
         //PDF
         System.out.println("hay transacciones");
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        Document document = new Document(PageSize.A4);
-        PdfWriter.getInstance(document, outputStream);
+        if (transactions != null && !transactions.isEmpty()) {
+            //PDF
+            System.out.println("hay transacciones");
 
-        document.open();
+            Document document = new Document(PageSize.A4);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PdfWriter.getInstance(document, baos);
+            document.open();
 
-        Paragraph title = new Paragraph("Account Information");
-        title.setAlignment(Element.ALIGN_CENTER);
-        document.add(title);
+            // Logo
+            String imgPath = "C:\\Users\\Joaquin\\Desktop\\logo.png";
+            Image logoImage = Image.getInstance(imgPath);
+            logoImage.scaleAbsolute(60, 50);
+            logoImage.setAlignment(Element.ALIGN_CENTER);
+            document.add(logoImage);
 
-        document.add(new Paragraph("Account holder: " + client.getFirstName() + " " + client.getLastName()));
-        document.add(new Paragraph("Account number: " + account.getNumber()));
-        document.add(new Paragraph("Account type: " + account.getTypeAccount()));
-        document.add(new Paragraph("Actual Balance: " + account.getBalance()));
+            // Title
 
-        // Agregar tabla con las transacciones
-        PdfPTable table = new PdfPTable(3);
-        table.setWidthPercentage(100);
-        table.setSpacingBefore(10f);
-        table.setSpacingAfter(10f);
 
-        PdfPCell cell;
-        cell = new PdfPCell(new Phrase("Date"));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cell);
+            // Account Information
+            Font infoFont = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.NORMAL, BaseColor.BLACK);
 
-        cell = new PdfPCell(new Phrase("Description"));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cell);
+            // Color para la palabra "Account"
+            BaseColor accountColor = new BaseColor(100, 100, 100);
 
-        cell = new PdfPCell(new Phrase("Amount"));
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cell);
+            Paragraph accountNumber = new Paragraph();
+            accountNumber.add(new Chunk("Account Number: ", infoFont));
+            accountNumber.add(new Chunk(account.getNumber(), new Font(infoFont.getFamily(), infoFont.getSize(), infoFont.getStyle(), accountColor)));
 
-        for (Transaction transaction : transactions) {
-            table.addCell(transaction.getDate().toString());
-            table.addCell(transaction.getDescription());
-            table.addCell(String.valueOf(transaction.getAmount()));
+            Paragraph accountOwner = new Paragraph();
+            accountOwner.add(new Chunk("Account Owner: ", infoFont));
+            accountOwner.add(new Chunk(account.getClient().getFirstName() + " " + account.getClient().getLastName(), new Font(infoFont.getFamily(), infoFont.getSize(), infoFont.getStyle(), accountColor)));
+
+            Paragraph balance = new Paragraph();
+            balance.add(new Chunk("Balance: ", infoFont));
+            balance.add(new Chunk(String.valueOf(account.getBalance()), new Font(infoFont.getFamily(), infoFont.getSize(), infoFont.getStyle(), accountColor)));
+
+            Paragraph accountType = new Paragraph();
+            accountType.add(new Chunk("Account Type: ", infoFont));
+            accountType.add(new Chunk(account.getTypeAccount().toString(), new Font(infoFont.getFamily(), infoFont.getSize(), infoFont.getStyle(), accountColor)));
+
+            // Añadir un espacio antes de los párrafos de la cuenta
+            accountNumber.setSpacingAfter(10f);
+            accountOwner.setSpacingAfter(10f);
+            balance.setSpacingAfter(10f);
+            accountType.setSpacingAfter(10f);
+
+            document.add(accountNumber);
+            document.add(accountOwner);
+            document.add(balance);
+            document.add(accountType);
+
+            // Transactions Table
+            PdfPTable table = new PdfPTable(5);
+            table.setWidthPercentage(100);
+            table.setSpacingBefore(10f);
+            table.setSpacingAfter(10f);
+            table.setPaddingTop(5); // Espaciado interno para todas las celdas
+
+           // Table Headers
+            Font headerFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
+            String[] headers = {"Type", "Date", "Description", "Amount", "Current Balance"};
+            for (String header : headers) {
+                PdfPCell cell = new PdfPCell(new Phrase(header, headerFont));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
+            }
+
+           // Table Data
+            Font cellFont = new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL, BaseColor.BLACK);
+            NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(); // Formateador de moneda
+            for (Transaction transaction : transactions) {
+                PdfPCell typeCell = new PdfPCell();
+
+                // Crear un objeto Phrase para contener el texto de la celda "Type"
+                Phrase typePhrase = new Phrase(String.valueOf(transaction.getType()), cellFont);
+
+                // Aplicar color y aumentar el tamaño solo a la celda "Type"
+                if ("DEBIT".equals(transaction.getType())) {
+                    typeCell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                    typePhrase.getFont().setColor(BaseColor.RED);
+                } else if ("CREDIT".equals(transaction.getType())) {
+                    typeCell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                    typePhrase.getFont().setColor(BaseColor.GREEN);
+                }
+
+                // Añadir el Phrase a la celda "Type"
+                typeCell.addElement(typePhrase);
+
+                // Establecer tamaño de celda para toda la tabla
+                typeCell.setFixedHeight(25f);
+                table.addCell(typeCell);
+
+                table.addCell(new Phrase(transaction.getDate().toString(), cellFont));
+                table.addCell(new Phrase(transaction.getDescription(), cellFont));
+                table.addCell(new Phrase(currencyFormatter.format(transaction.getAmount()), cellFont));
+                table.addCell(new Phrase(currencyFormatter.format(transaction.getBalance()), cellFont));
+            }
+
+            document.add(table);
+
+
+            document.close();
+
+            // Preparar la respuesta para descargar el PDF
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            HttpHeaders headerss = new HttpHeaders();
+            headerss.add("Content-Disposition", "attachment; filename=archivo.pdf");
+
+            return ResponseEntity
+                    .ok()
+                    .headers(headerss)
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(new InputStreamResource(bais));
+        } else {
+            System.out.println("No se encontraron transacciones para generar el PDF.");
+            return new ResponseEntity<InputStreamResource>(HttpStatus.NOT_FOUND);
         }
 
-        document.add(table);
-        document.close();
-
-        return new ResponseEntity<ByteArrayOutputStream>(HttpStatus.ACCEPTED);
     }
 
 }

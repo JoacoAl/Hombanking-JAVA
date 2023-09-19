@@ -8,6 +8,8 @@ const app = createApp({
       logged: false,
       amountFormat: [],
       amountFormated: "",
+      destinationType: true,
+      ownAccounts: [],
       transferObject: {
         amount: 0.0,
         description: "",
@@ -35,6 +37,8 @@ const app = createApp({
             location.search
           ).get("number");
           console.log(this.transferObject.numberAccount);
+          this.ownAccounts = this.accounts.filter(acc => acc.number != this.transferObject.numberAccount)
+          console.log(this.ownAccounts);
         });
     },
     logOut() {
@@ -56,6 +60,19 @@ const app = createApp({
           this.modalErrorTransfer();
         });
     },
+
+    ownAccount() {
+      document.getElementById("myAccounts").style.display = "block"
+      document.getElementById("forgeinAccounts").style.display = "none"
+    },
+
+    forgeinAccount() {
+      document.getElementById("myAccounts").style.display = "none"
+      document.getElementById("forgeinAccounts").style.display = "block"
+    },
+
+
+    /* cosas */
     missingData() {
       if (
         this.transferObject.amount == 0 ||

@@ -85,18 +85,19 @@ const app = createApp({
         .put("/api/clients/current/accounts", `accountNumber=${accountNumber}`)
         .then((response) => {
           console.log("borrada");
+          this.closeModal(accountNumber)
           this.deletAccountOk();
         })
         .catch(err => {
 
           console.log(err.response.data);
-          this.closeModal();
+          this.closeModal(accountNumber);
           this.deleteAccountError();
 
         });
     },
 
-    /* downloadResumePDF() {
+    downloadResumePDF() {
       const { id, startDate, endDate } = this.transferObject;
       const url = `/api/downloadPDF?id=${id}&startDate=${startDate}&endDate=${endDate}`;
 
@@ -118,7 +119,7 @@ const app = createApp({
         })
         .catch(err => console.log(err.response.data))
     },
- */
+
     /* COSAS */
     deletAccountOk() {
       document.getElementById("deletAccountOk").style.display = "block";
@@ -130,9 +131,6 @@ const app = createApp({
       document.getElementById("deleteAccountError").style.display = "none"
     },
 
-    confirmationModal() {
-      document.getElementById("confirmationModal").style.display = "block";
-    },
     closeModal() {
       document.getElementById("confirmationModal").style.display = "none";
     },
@@ -151,9 +149,20 @@ const app = createApp({
     },
 
 
-
-
-
+    confirmationModal(accountNumber) {
+      const modalNumber = `confirmationModal-${accountNumber}`;
+      const modal = document.getElementById(modalNumber);
+      console.log(modalNumber);
+      modal.style.display = 'block';
+    },
+    closeModal() {
+      document.getElementById("confirmationModal").style.display = "none";
+    },
+    closeModal(accountNumber) {
+      const modalNumber = `confirmationModal-${accountNumber}`;
+      const modal = document.getElementById(modalNumber);
+      modal.style.display = 'none';
+    },
 
   },
 });
